@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>META TRACKER</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    min-height: 100vh; 
+  }
+  .content {
+    max-width: 800px; 
+    width: 100%; 
+    padding: 20px;
+    background-color: rgba(248, 248, 94, 0.564); 
+    border-radius: 10px;
+    box-shadow: 0px 0 15px rgba(0, 0, 0, 0.278);
+    margin-top: 20px; 
+  }
+
+  .meta-block {
+    background-color: rgba(255, 255, 255, 0.725);
+    padding: 15px; 
+    margin-bottom: 20px; 
+    border-radius: 10px;
+    width: 100%; 
+    box-shadow: 0px 0 15px rgba(0, 0, 0, 0.093);
+    transition: all 0.3s ease; 
+  }
+
+  .meta-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px; 
+  }
+
+  .meta-info {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 5px; 
+  }
+
+  .meta-description {
+    font-size: 1rem;
+    margin-top: 5px; 
+  }
+
+  .btn-voltar {
+    margin-bottom: 20px; 
+  }
+
+  
+  .fadeOut {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <a href="metasprofessor.ejs" class="btn btn-secondary btn-voltar"><i class="bi bi-box-arrow-left"></i> Voltar</a>
+    <h3>Metas pendentes:</h3> 
+    <div id="metasContainer">
+    </div>
+  </div>
+  
+  <script>
+    // Função para buscar as metas do banco de dados           !!exemplo
+    function fetchMetas() {
+      return [
+        { id: 1, aluno: "Aluno 1", data: "01/06/2024", descricao: "Descrição da meta 1." },
+        { id: 2, aluno: "Aluno 2", data: "05/06/2024", descricao: "Descrição da meta 2." },
+        { id: 3, aluno: "Aluno 3", data: "10/06/2024", descricao: "Descrição da meta 3." }
+      ];
+    }
+
+    // Seleciona o conteiner das metas
+    const metasContainer = document.getElementById("metasContainer");
+
+    // Função para preencher os blocos de meta com os dados
+    function renderMetas() {
+      const metas = fetchMetas(); // Busca as metas do banco de dados
+      // Limpa o conteúdo atual do contêiner
+      metasContainer.innerHTML = '';
+
+      // Itera sobre as metas e cria os blocos de meta
+      metas.forEach(meta => {
+        const metaBlock = document.createElement("div");
+        metaBlock.classList.add("meta-block"); // Adiciona classe de transição
+
+        const metaTitle = document.createElement("div");
+        metaTitle.classList.add("meta-title");
+        metaTitle.textContent = meta.aluno;  // Altera para mostrar o nome do aluno
+        metaBlock.appendChild(metaTitle);
+
+        const metaInfo = document.createElement("div");
+        metaInfo.classList.add("meta-info");
+        metaInfo.textContent = "Data de Entrega: " + meta.data;
+        metaBlock.appendChild(metaInfo);
+
+        const metaDescription = document.createElement("div");
+        metaDescription.classList.add("meta-description");
+        metaDescription.textContent = meta.descricao;
+        metaBlock.appendChild(metaDescription);
+
+        // Adiciona o botão de remover
+        const btnRemover = document.createElement("button");
+        btnRemover.classList.add("btn", "btn-danger", "btn-remover");
+        btnRemover.innerHTML = '<i class="bi bi-trash3"></i> Remover';
+        btnRemover.addEventListener("click", () => {
+          removerMeta(meta.id, metaBlock);
+        });
+        metaBlock.appendChild(btnRemover);
+
+        metasContainer.appendChild(metaBlock);
+      });
+    }
+
+    // Função para remover uma meta
+    function removerMeta(id, metaBlock) {
+      // Adiciona a classe de animação para desaparecimento
+      metaBlock.classList.add("fadeOut");
+      // Simula uma remoção do bloco após a animação
+      setTimeout(() => {
+        // Remove o bloco de meta
+        metaBlock.remove();
+      }, 300); // Tempo da animação de desaparecimento
+    }
+
+    // Chama a função para preencher os blocos de meta ao carregar a página
+    renderMetas();
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA
+
+</body>
+</html>
